@@ -9,6 +9,7 @@ public class Calculator {
             System.out.println("Enter 2: Scientific Calculator");
             System.out.println("Enter 3: Unit Conversion ");
             System.out.println("Enter 4: Exit ");
+            System.out.println("---------------------------------");
             System.out.print("Enter your choice:");
             int choice=Util.sc.nextInt();
             switch(choice){
@@ -16,7 +17,7 @@ public class Calculator {
                     ArithmeticCalculator.run();
                     break;
                 case 2:
-
+                    ScientificCalculator.run();
                     break;
                 case 3:
 
@@ -39,7 +40,8 @@ class ArithmeticCalculator{
         System.out.println("Press 2: Subtraction");
         System.out.println("Press 3: Multiplication");
         System.out.println("Press 4: Division");
-        System.out.println("Press 5: Exit");
+        System.out.println("Press 5: Back");
+        System.out.println("---------------------");
         System.out.print("Enter choice:");
         int choice=Util.sc.nextInt();
         switch(choice){
@@ -84,7 +86,6 @@ class ArithmeticCalculator{
         for(int i=1;i<numbers.size();i++)diff-= numbers.get(i);
         return diff;
     }
-
     public static double multiplication (ArrayList<Double> numbers){
         if(numbers.size()<=1){
             throw new IllegalArgumentException("Atleast two numbers are required.");
@@ -107,6 +108,39 @@ class ArithmeticCalculator{
         return quotient;
     }
 }
+
+class ScientificCalculator{
+    public static void run(){
+        System.out.println("Scientific Calculator");
+        System.out.println("---------------------");
+        System.out.println("Enter 1: Exponent");
+        System.out.println("Enter 2: Square Root");
+        System.out.println("Enter 3: Back");
+        System.out.println("---------------------");
+        System.out.print("Enter your choice:");
+        int choice=Util.sc.nextInt();
+        switch (choice){
+            case 1:
+                int base,pow;
+                System.out.print("\nEnter base:");
+                base=Util.sc.nextByte();
+                System.out.print("\nEnter power:");
+                pow=Util.sc.nextByte();
+                System.out.println("\nResult: "+Math.pow(base,pow));
+                break;
+            case 2:
+                System.out.print("Enter number: ");
+                double input=Util.sc.nextDouble();
+                if(input<0) throw new ArithmeticException("Square root can't be negative.");
+                System.out.println("\nResult: "+Math.sqrt(input));
+            case 3: return;
+            default:
+                System.out.println("Enter valid choice");
+        }
+    }
+}
+
+class UnitConversion{}
 
 class Util{
     public static final Scanner sc=new Scanner(System.in);
