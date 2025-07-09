@@ -22,6 +22,10 @@ public class Management {
                      String fullName = Util.sc.nextLine();
                      System.out.print("\nEnter Phone Number: ");
                      String phoneNo = Util.sc.nextLine();
+                     if(phoneNo.length()!=10) {
+                         System.out.println("Length of phone number should be of 10 digits.");
+                         break;
+                     }
                      System.out.print("\nEnter Email: ");
                      String email = Util.sc.nextLine();
                      addContact(fullName, phoneNo, email);
@@ -30,6 +34,7 @@ public class Management {
                      Update.run();
                      break;
                  case 3:
+                     System.out.print("Enter phone number of user you want to delete:");
                      String phone = Util.sc.nextLine();
                      delete(phone);
                      break;
@@ -58,15 +63,12 @@ public class Management {
                  break;
              }
          }
-         if(phoneNo.length()==10){
-             if(!exists){
-                 names.add(fullName);
-                 phoneNos.add(phoneNo);
-                 emails.add(email);
-                 System.out.println("Contact added successfully");
-             }
+         if(!exists){
+             names.add(fullName);
+             phoneNos.add(phoneNo);
+             emails.add(email);
+             System.out.println("Contact added successfully");
          }
-         else System.out.println("Length of phone number should be of 10 digits.");
     }
 static class Update {
     public static void run(){
@@ -80,7 +82,7 @@ static class Update {
         System.out.print("Enter your choice: ");
         int choice=Util.sc.nextInt();
         Util.sc.nextLine();
-        System.out.println("Enter Phone Number: ");
+        System.out.print("\nEnter Phone Number: ");
         String phoneNo=Util.sc.nextLine();
         switch(choice){
             case 1:
@@ -93,10 +95,9 @@ static class Update {
                 updateEmail(phoneNo);
                 break;
             case 4:
-                mainMenu();
                 break;
             default:
-                System.out.println("!! ENTER VALID CHOICE !!");
+                System.out.println("\n!! ENTER VALID CHOICE !!");
         }
     }
     public static void updateName(String phoneNo) {
@@ -135,9 +136,9 @@ static class Update {
         }
     }
 
-    public static void updateEmail(String email) {
+    public static void updateEmail(String phoneNo) {
         for (int i=0;i<phoneNos.size();i++) {
-            if (phoneNos.get(i).equals(email)) {
+            if (phoneNos.get(i).equals(phoneNo)) {
                 System.out.print("Enter new email: ");
                 String newEmail = Util.sc.nextLine();
                 for(int j=0;j<emails.size();j++){
@@ -154,8 +155,9 @@ static class Update {
     }
 }
 public static void delete(String phoneNo){
-    System.out.println("Deletion");
-    System.out.println("--------");
+    System.out.println("-------------");
+    System.out.println("Confirmation");
+    System.out.println("-------------");
     System.out.println("1: Confirm");
     System.out.println("2: Back");
     System.out.print("Enter your choice: ");
@@ -163,31 +165,36 @@ public static void delete(String phoneNo){
     Util.sc.nextLine();
     switch(choice){
         case 1:
-            for(int i=0;i<names.size();i++){
-                if(names.get(i).equals(phoneNo)){
-                    names.remove(i);
-                    phoneNos.remove(i);
-                    emails.remove(i);
-                    System.out.println("Contact deleted successfully.");
+            boolean exists=false;
+            int i;
+            for(i=0;i<phoneNos.size();i++){
+                if(phoneNos.get(i).equals(phoneNo)){
+                    exists=true;
                     break;
                 }
             }
+            if(exists){
+                names.remove(i);
+                phoneNos.remove(i);
+                emails.remove(i);
+                System.out.println("Contact deleted successfully.");
+            }
+            else System.out.println("Contact doesn't exist.");
             break;
         case 2:
-            mainMenu();
             break;
         default:
             System.out.println("!! ENTER VALID CHOICE !!");
     }
 }
 public static void viewContacts(){
-    System.out.println("Full Name\t\tPhone Number\t\tEmail");
-    System.out.println("---------\t\t------------\t\t-----");
-    for(int i=0;i<names.size();i++){
-        System.out.println(names.get(i)+"\t\t"+phoneNos.get(i)+"\t\t"+emails.get(i));
-    }
-}
+    System.out.printf("%-20s %-20s %-20s%n","Name","Phone Number","Email");
+    System.out.printf("%-20s %-20s %-20s%n","------------------","------------------","------------------");
+    if(names.size()==0) System.out.printf("%35s%n","No Contacts");
 
+    for(int i=0;i<names.size();i++)System.out.printf("%-20s %-20s %-20s%n",names.get(i),phoneNos.get(i),emails.get(i));
+    System.out.println("-".repeat(60));
+}
 }
 
 
