@@ -1,5 +1,5 @@
 import java.util.*;
-public class Management {
+public class ContactManagementSystem {
      private static ArrayList<String> names=new ArrayList<>();
      private static ArrayList<String> phoneNos=new ArrayList<>();
      private static ArrayList<String> emails=new ArrayList<>();
